@@ -1,4 +1,4 @@
-// Defining variables and class initialisations
+  // Defining variables and class initialisations
 BG backgroundScene;
 ArrayList<Trash> trashList;
 PImage[] trashSprites = new PImage[3];
