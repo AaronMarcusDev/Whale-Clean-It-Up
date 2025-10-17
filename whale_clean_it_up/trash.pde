@@ -2,13 +2,7 @@ class Trash {
   float x, y;
   float speed;
   PImage image;
-
-  boolean isColliding(float x1, float y1, float w1, float h1,
-    float x2, float y2, float w2, float h2) {
-    return !(x1 + w1 < x2 || x1 > x2 + w2 ||
-      y1 + h1 < y2 || y1 > y2 + h2);
-  }
-
+  boolean active = true;
 
   Trash(float x, float y, PImage image) {
     this.x = x;
@@ -24,8 +18,9 @@ class Trash {
   }
 
   void display() {
-    imageMode(CENTER);
-    image(image, x, y);
+    if (this.active) {
+      imageMode(CENTER);
+      image(image, x, y);
+    }
   }
 }
-
