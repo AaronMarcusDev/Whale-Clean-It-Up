@@ -3,11 +3,11 @@ class Bin {
   float arrowAngle; 
   color col;
   
-  //Bin(float x, float y, float arrowAngle) {
-  //  this.x = x;
-  //  this.y = y;
-  //  this.arrowAngle = arrowAngle;
-  //}
+  Bin(int x, float y, int arrowAngle) {
+   this.x = x;
+   this.y = y;
+   //this.arrowAngle = arrowAngle;
+  }
 
   void display() {
     pushMatrix();
@@ -27,7 +27,7 @@ class Bin {
     noStroke();
     beginShape();
     vertex(10, -20);  
-    vertex(0, -20);
+    vertex(0, -20); 
     vertex(0, -25);
     vertex(-10, -10);
     vertex(0, 5);

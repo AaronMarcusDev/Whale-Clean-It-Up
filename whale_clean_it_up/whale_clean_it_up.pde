@@ -7,6 +7,7 @@ Whale player;
 int lastSpawnTime = 0;
 int spawnInterval = 5000;
 int trashCount = 0;
+int activeTrash = 0;
 
 int moveDirX = 0;
 int moveDirY = 0;
@@ -32,6 +33,7 @@ void spawnTrash() {
   int index = int(random(trashSprites.length)); // select random trash object from list
   PImage selectedImg = trashSprites[index]; // get that object
   trashList.add(new Trash(random(width), -20, selectedImg));
+  activeTrash++;
   //                                       ^-- so that it starts just above the screen
 }
 
@@ -59,6 +61,7 @@ void keyReleased() {
 
 void draw() {
   backgroundScene.display();
+
   dcr.starfish(600, -50, #E6E6FA);
   dcr.starfish(200, 0, #FFB347);
   dcr.starfish(100, 70, #D8BFD8);
@@ -80,19 +83,32 @@ void draw() {
   }
 
   for (Trash t : trashList) {
-  t.update();
-  t.display();
+    t.update();
+    t.display();
 
-  if (t.active && player.collidesWith(t)) {
-    println("Whale collided with trash");
-    t.active = false;
-    trashCount += 1;
+    if (t.active && player.collidesWith(t)) {
+      t.active = false;
+      trashCount++;
+      activeTrash--;
+    }
+
+    // Count only trash that is active and still on screen
+    if (t.active && t.y < height) {
+      // activeTrash++;
+    }
   }
-}
-
 
   fill(0);
   textSize(25);
   text("trash counter: " + trashCount, 800, 40);
+
+  // Game over condition
+  if (activeTrash >= 6) {
+    fill(255, 0, 0);
+    textSize(50);
+    textAlign(CENTER, CENTER);
+    text("Game Over", width/2, height/2);
+    noLoop(); // stop the game
+  }
 }
 
