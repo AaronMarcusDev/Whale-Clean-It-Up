@@ -47,7 +47,15 @@ void keyPressed() {
 
 void draw() {
   backgroundScene.display();
-  dcr.starfish(600);
+  dcr.starfish(600,-50,#E6E6FA);
+  dcr.starfish(200,0,#FFB347);
+  dcr.starfish(100,70,#D8BFD8);
+  dcr.starfish(840,-20,#8FDDE7);
+  dcr.starfish(20,-40,#FFCBA4);
+  dcr.starfish(-10,10,#FA8072);
+  dcr.starfish(450,-60,#FFDAB9);
+  dcr.starfish(430,35,#FF9966);
+
   player.display();
 
   if (millis() - lastSpawnTime > spawnInterval) {
