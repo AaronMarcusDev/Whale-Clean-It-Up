@@ -80,16 +80,19 @@ void draw() {
   }
 
   for (Trash t : trashList) {
-    t.update();
-    t.display();
+  t.update();
+  t.display();
 
-    if (player.collidesWith(t)) {
-      println("Whale collided with trash");
-      t.active = false;
-      trashCount += 1;
-    }
+  if (t.active && player.collidesWith(t)) {
+    println("Whale collided with trash");
+    t.active = false;
+    trashCount += 1;
   }
-  fill(0);
-        textSize(25);
-      text("trash counter:", 760, 40);
 }
+
+
+  fill(0);
+  textSize(25);
+  text("trash counter: " + trashCount, 800, 40);
+}
+
