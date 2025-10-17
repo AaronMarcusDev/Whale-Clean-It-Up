@@ -42,4 +42,3 @@ void draw() {
     t.display();
   }
 }
-
