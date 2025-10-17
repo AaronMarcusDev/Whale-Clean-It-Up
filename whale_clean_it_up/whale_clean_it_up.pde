@@ -85,4 +85,7 @@ void draw() {
       t.active = false;
     }
   }
+  fill(0);
+        textSize(25);
+      text("trash counter:", 760, 40);
 }
