@@ -1,3 +1,5 @@
+import ddf.minim.*;
+
 BG backgroundScene;
 ArrayList<Trash> trashList;
 PImage[] trashSprites = new PImage[3];
@@ -73,13 +75,13 @@ void draw() {
 
   float playerX = player.getPosX();
   float playerY = player.getPosY();
-  if((playerX > 0 && playerX < width) || (playerX <= 0 && moveDirX == 1) || (playerX >= width && moveDirX == -1)) {
+  if ((playerX > 0 && playerX < width) || (playerX <= 0 && moveDirX == 1) || (playerX >= width && moveDirX == -1)) {
     player.move(moveDirX, 0);
-  } 
-  if((playerY > 150 && playerY < height-50) || (playerY <= 150 && moveDirY == 1) || (playerY >= height-50 && moveDirY == -1)) {
+  }
+  if ((playerY > 150 && playerY < height-50) || (playerY <= 150 && moveDirY == 1) || (playerY >= height-50 && moveDirY == -1)) {
     player.move(0, moveDirY);
   }
-  
+
   if (moveDirX != 0) {
     player.setF(moveDirX);
   }
@@ -98,11 +100,10 @@ void draw() {
       t.active = false;
       trashCount++;
       activeTrash--;
-    }
-
-    // Count only trash that is active and still on screen
-    if (t.active && t.y < height) {
-      // activeTrash++;
+      
+      if (trashCount % 3 == 0 && spawnInterval > 750) {
+        spawnInterval -= 750;
+      }
     }
   }
 
@@ -111,12 +112,12 @@ void draw() {
   text("trash counter: " + trashCount, 800, 40);
 
   // Game over condition
-  if (activeTrash >= 6) {
+  if (activeTrash >= 8) {
     fill(255, 0, 0);
+    stroke(2);
     textSize(50);
     textAlign(CENTER, CENTER);
     text("Game Over", width/2, height/2);
-    noLoop(); // stop the game
+    noLoop();
   }
 }
-
