@@ -2,6 +2,7 @@ class Whale {
   float x, y;
   float t = 0;
   float flipperAngle = 0;
+  float moveSpeed = 3; //whale move speed
   int f = 1; //faceDirection: determines whether whale faces left or right
 
   Whale(float initX, float initY) {
@@ -10,6 +11,8 @@ class Whale {
   }
 
   void display() {
+    // MAIN BODY
+    pushMatrix();
     translate(x, y);
     beginShape();
     fill(#519FCE);
@@ -50,10 +53,10 @@ class Whale {
     rect(f*30,-29,20,5);
     rect(f*34,-39,12,10);
 
+    // FLIPPER
     translate(f*-90, 32/4);
     rotate(0.5*sin(5*flipperAngle));
     fill(#519FCE);
-    //noStroke();
     circle(0, 0, 38);
     stroke(#000000);
     beginShape();
@@ -66,19 +69,20 @@ class Whale {
     vertex(f*-40,5);
     vertex(0, 19);
     endShape();
+    popMatrix();
     
     flipperAngle += PI/180;
     if (flipperAngle >= 2*PI) {
-     flipperAngle = 0; 
+     flipperAngle = 0; //resets when gone through a full period to prevent overflow
     }
   }
 
   void move(float dx, float dy) {
-    x += dx;
-    y += dy;
+    x += dx*moveSpeed;
+    y += dy*moveSpeed;
   }
   
   void setF(int input) {
-   f = input; 
+   f = input; //changes face direction
   }
 }
