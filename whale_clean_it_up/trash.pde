@@ -2,6 +2,7 @@ class Trash {
   float x, y;
   float speed;
   PImage image;
+  boolean active = true;
 
   Trash(float x, float y, PImage image) {
     this.x = x;
@@ -17,8 +18,9 @@ class Trash {
   }
 
   void display() {
-    imageMode(CENTER);
-    image(image, x, y);
+    if (this.active) {
+      imageMode(CENTER);
+      image(image, x, y);
+    }
   }
 }
-

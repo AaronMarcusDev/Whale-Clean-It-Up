@@ -1,4 +1,3 @@
-  // Defining variables and class initialisations
 BG backgroundScene;
 ArrayList<Trash> trashList;
 PImage[] trashSprites = new PImage[3];
@@ -13,16 +12,16 @@ void setup() {
   backgroundScene = new BG();
   dcr = new Decoration();
   player = new Whale(width/2, height/2);
-
   trashList = new ArrayList<Trash>();
 
-  // Load assets
+  // Load and resize trash images
   trashSprites[0] = loadImage("trash1.png");
-  trashSprites[0].resize(60, 60);
   trashSprites[1] = loadImage("trash2.png");
-  trashSprites[1].resize(60, 60);
   trashSprites[2] = loadImage("trash3.png");
-  trashSprites[2].resize(60, 60);
+
+  for (int i = 0; i < trashSprites.length; i++) {
+    trashSprites[i].resize(60, 60);
+  }
 }
 
 void spawnTrash() {
@@ -33,24 +32,22 @@ void spawnTrash() {
 }
 
 void keyPressed() {
-    if (key == 'w') {
-        player.y -= 10;
-    } else if (key == 's') {
-        player.y += 10;
-    } else if (key == 'a') {
-        player.x -= 10;
-        player.setF(-1);
-    } else if (key == 'd') {
-        player.x += 10;
-        player.setF(1);
-    }
+  if (key == 'w') {
+    player.y -= 10;
+  } else if (key == 's') {
+    player.y += 10;
+  } else if (key == 'a') {
+    player.x -= 10;
+    player.setF(-1);
+  } else if (key == 'd') {
+    player.x += 10;
+    player.setF(1);
+  }
 }
 
 void draw() {
   backgroundScene.display();
-  
   dcr.starfish(600);
-
   player.display();
 
   if (millis() - lastSpawnTime > spawnInterval) {
@@ -58,9 +55,13 @@ void draw() {
     lastSpawnTime = millis();
   }
 
-  // Update and display all trash
   for (Trash t : trashList) {
     t.update();
     t.display();
+
+    if (player.collidesWith(t)) {
+      println("Whale collided with trash");
+      t.active = false;
+    }
   }
 }

@@ -4,10 +4,19 @@ class Whale {
   float flipperAngle = 0;
   float moveSpeed = 3; //whale move speed
   int f = 1; //faceDirection: determines whether whale faces left or right
+  // purely for collision checking
+
 
   Whale(float initX, float initY) {
     x = initX;
     y = initY;
+  }
+
+  boolean collidesWith(Trash t) {
+    float whaleW = 160;  // total horizontal span (from -90 to +75)
+    float whaleH = 60;  // vertical span (from top fin to belly)
+    return isColliding(x - whaleW/2, y - whaleH/2, whaleW, whaleH,
+      t.x - t.image.width/2, t.y - t.image.height/2, t.image.width, t.image.height);
   }
 
   void display() {
@@ -38,20 +47,20 @@ class Whale {
     vertex(f*45, 27);
     vertex(f*67, 18);
     endShape();
-    
+
     beginShape();
     fill(#519FCE);
-    vertex(f*-10,20);
-    vertex(f*-30,25);
-    vertex(f*-45,40);
-    vertex(0,30);
-    vertex(f*10,20);
+    vertex(f*-10, 20);
+    vertex(f*-30, 25);
+    vertex(f*-45, 40);
+    vertex(0, 30);
+    vertex(f*10, 20);
     endShape();
-    
+
     fill(#000000);
-    circle(f*40,0,6);
-    rect(f*30,-29,20,5);
-    rect(f*34,-39,12,10);
+    circle(f*40, 0, 6);
+    rect(f*30, -29, 20, 5);
+    rect(f*34, -39, 12, 10);
 
     // FLIPPER
     translate(f*-90, 32/4);
@@ -63,17 +72,17 @@ class Whale {
     vertex(0, -19);
     vertex(f*-40, -15);
     vertex(f*-50, -13);
-    vertex(f*-70,-18);
-    vertex(f*-90,-20);
+    vertex(f*-70, -18);
+    vertex(f*-90, -20);
     vertex(f*-60, -5);
-    vertex(f*-40,5);
+    vertex(f*-40, 5);
     vertex(0, 19);
     endShape();
     popMatrix();
-    
+
     flipperAngle += PI/180;
     if (flipperAngle >= 2*PI) {
-     flipperAngle = 0; //resets when gone through a full period to prevent overflow
+      flipperAngle = 0; //resets when gone through a full period to prevent overflow
     }
   }
 
@@ -81,8 +90,9 @@ class Whale {
     x += dx*moveSpeed;
     y += dy*moveSpeed;
   }
-  
+
   void setF(int input) {
-   f = input; //changes face direction
+    f = input; //changes face direction
   }
 }
+
