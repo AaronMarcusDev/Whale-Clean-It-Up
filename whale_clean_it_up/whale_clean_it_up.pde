@@ -2,6 +2,7 @@
 BG backgroundScene;
 ArrayList<Trash> trashList;
 PImage[] trashSprites = new PImage[3];
+Decoration dcr;
 
 int lastSpawnTime = 0;
 int spawnInterval = 5000;
@@ -9,6 +10,7 @@ int spawnInterval = 5000;
 void setup() {
   size(1000, 800);
   backgroundScene = new BG();
+  dcr = new Decoration();
 
   trashList = new ArrayList<Trash>();
 
@@ -30,6 +32,8 @@ void spawnTrash() {
 
 void draw() {
   backgroundScene.display();
+  
+  dcr.starfish(600);
 
   if (millis() - lastSpawnTime > spawnInterval) {
     spawnTrash();
@@ -42,4 +46,3 @@ void draw() {
     t.display();
   }
 }
-
