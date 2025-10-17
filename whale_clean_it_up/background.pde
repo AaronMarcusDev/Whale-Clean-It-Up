@@ -14,8 +14,8 @@ class BG {
       float waveHeight = 20;
       float waveLength = 100;
       float yDownwards = 100;
-
-      float y = yDownwards + waveHeight * sin((x / waveLength) + phase);
+      
+      float y = (yDownwards + sin(frameCount * 0.04) * 15) + waveHeight * sin((x / waveLength) + phase);
       // Simple mathematical sine wave at the top
       vertex(x, y);
     }
@@ -32,4 +32,3 @@ class BG {
     phase += 0.02;
   }
 }
-
