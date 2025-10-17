@@ -6,6 +6,10 @@ Whale player;
 
 int lastSpawnTime = 0;
 int spawnInterval = 5000;
+int trashCount = 0;
+
+int moveDirX = 0;
+int moveDirY = 0;
 
 void setup() {
   size(1000, 800);
@@ -32,31 +36,42 @@ void spawnTrash() {
 }
 
 void keyPressed() {
-  if (key == 'w') {
-    if (player.y - 10 >= 180) { // prevent going above water
-      player.y -= 10;
-    }
-  } else if (key == 's') {
-    if (player.y + 10 <= height - 80) {
-      player.y += 10;
-    }
-  } else if (key == 'a') {
-    if (player.x - 10 >= 0) {
-      player.x -= 10;
-      player.setF(-1);
-    }
-  } else if (key == 'd') {
-    if (player.x + 10 <= width) {
-      player.x += 10;
-      player.setF(1);
-    }
+  if ((key == 'a' || key == 'A') && player.x > 0) {
+    moveDirX = -1;
+  } else if ((key == 'd' || key == 'D') && player.x < width) {
+    moveDirX = 1;
+  } else if ((key == 'w' || key == 'W') && player.y > 180) {
+    moveDirY = -1;
+  } else if ((key == 's' || key == 'S') && player.y < height) {
+    moveDirY = 1;
+  }
+}
+
+
+void keyReleased() {
+  if (keyCode == 'a' || keyCode == 'A' || keyCode == 'd' || keyCode == 'D') {
+    moveDirX = 0;
+  } else if (keyCode == 'w' || keyCode == 'W' || keyCode == 's' || keyCode == 'S') {
+    moveDirY = 0;
   }
 }
 
 
 void draw() {
   backgroundScene.display();
-  dcr.starfish(600);
+  dcr.starfish(600, -50, #E6E6FA);
+  dcr.starfish(200, 0, #FFB347);
+  dcr.starfish(100, 70, #D8BFD8);
+  dcr.starfish(840, -20, #8FDDE7);
+  dcr.starfish(20, -40, #FFCBA4);
+  dcr.starfish(-10, 10, #FA8072);
+  dcr.starfish(450, -60, #FFDAB9);
+  dcr.starfish(430, 35, #FF9966);
+
+  player.move(moveDirX, moveDirY);
+  if (moveDirX != 0) {
+    player.setF(moveDirX);
+  }
   player.display();
 
   if (millis() - lastSpawnTime > spawnInterval) {
@@ -71,6 +86,7 @@ void draw() {
     if (player.collidesWith(t)) {
       println("Whale collided with trash");
       t.active = false;
+      trashCount += 1;
     }
   }
 }
