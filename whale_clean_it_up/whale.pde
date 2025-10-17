@@ -111,8 +111,21 @@ class Whale {
     x += dx*moveSpeed;
     y += dy*moveSpeed;
   }
+  
+  void setPos(float setX, float setY) {
+   x = setX;
+   y = setY;
+  }
 
   void setF(int input) {
     f = input; //changes face direction
+  }
+  
+  float getPosX() {
+    return x;
+  }
+  
+  float getPosY() {
+   return y; 
   }
 }

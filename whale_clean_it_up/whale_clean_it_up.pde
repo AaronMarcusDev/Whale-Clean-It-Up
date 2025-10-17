@@ -68,7 +68,15 @@ void draw() {
   dcr.starfish(450, -60, #FFDAB9);
   dcr.starfish(430, 35, #FF9966);
 
-  player.move(moveDirX, moveDirY);
+  float playerX = player.getPosX();
+  float playerY = player.getPosY();
+  if((playerX > 0 && playerX < width) || (playerX <= 0 && moveDirX == 1) || (playerX >= width && moveDirX == -1)) {
+    player.move(moveDirX, 0);
+  } 
+  if((playerY > 150 && playerY < height-50) || (playerY <= 150 && moveDirY == 1) || (playerY >= height-50 && moveDirY == -1)) {
+    player.move(0, moveDirY);
+  }
+  
   if (moveDirX != 0) {
     player.setF(moveDirX);
   }
