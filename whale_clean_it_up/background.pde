@@ -16,6 +16,7 @@ class BG {
       float yDownwards = 100;
 
       // Simple mathematical sine wave at the top
+      // addition of sinwave with framecount for more realistic ocean effect
       float y = (yDownwards + sin(frameCount * 0.04) * 15) + waveHeight * sin((x / waveLength) + phase);
       //                                ^-- For up and down movement
       vertex(x, y);

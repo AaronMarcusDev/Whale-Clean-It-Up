@@ -6,6 +6,7 @@ Whale player;
 
 int lastSpawnTime = 0;
 int spawnInterval = 5000;
+int trashCount = 0;
 
 int moveDirX = 0;
 int moveDirY = 0;
@@ -35,16 +36,17 @@ void spawnTrash() {
 }
 
 void keyPressed() {
-  if (keyCode == 'a' || keyCode == 'A') {
+  if ((key == 'a' || key == 'A') && player.x > 0) {
     moveDirX = -1;
-  } else if (keyCode == 'd' || keyCode == 'D') {
+  } else if ((key == 'd' || key == 'D') && player.x < width) {
     moveDirX = 1;
-  } else if (keyCode == 'w' || keyCode == 'W') {
+  } else if ((key == 'w' || key == 'W') && player.y > 180) {
     moveDirY = -1;
-  } else if (keyCode == 's' || keyCode == 'S') {
+  } else if ((key == 's' || key == 'S') && player.y < height) {
     moveDirY = 1;
   }
 }
+
 
 void keyReleased() {
   if (keyCode == 'a' || keyCode == 'A' || keyCode == 'd' || keyCode == 'D') {
@@ -53,6 +55,7 @@ void keyReleased() {
     moveDirY = 0;
   }
 }
+
 
 void draw() {
   backgroundScene.display();
@@ -65,7 +68,15 @@ void draw() {
   dcr.starfish(450, -60, #FFDAB9);
   dcr.starfish(430, 35, #FF9966);
 
-  player.move(moveDirX, moveDirY);
+  float playerX = player.getPosX();
+  float playerY = player.getPosY();
+  if((playerX > 0 && playerX < width) || (playerX <= 0 && moveDirX == 1) || (playerX >= width && moveDirX == -1)) {
+    player.move(moveDirX, 0);
+  } 
+  if((playerY > 150 && playerY < height-50) || (playerY <= 150 && moveDirY == 1) || (playerY >= height-50 && moveDirY == -1)) {
+    player.move(0, moveDirY);
+  }
+  
   if (moveDirX != 0) {
     player.setF(moveDirX);
   }
@@ -77,15 +88,19 @@ void draw() {
   }
 
   for (Trash t : trashList) {
-    t.update();
-    t.display();
+  t.update();
+  t.display();
 
-    if (player.collidesWith(t)) {
-      println("Whale collided with trash");
-      t.active = false;
-    }
+  if (t.active && player.collidesWith(t)) {
+    println("Whale collided with trash");
+    t.active = false;
+    trashCount += 1;
   }
-  fill(0);
-        textSize(25);
-      text("trash counter:", 760, 40);
 }
+
+
+  fill(0);
+  textSize(25);
+  text("trash counter: " + trashCount, 800, 40);
+}
+
