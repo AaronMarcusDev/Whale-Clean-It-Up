@@ -1,4 +1,14 @@
 import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
+
+// Music library import inits
+Minim minim;
+AudioPlayer bgMusic;
+
 
 BG backgroundScene;
 ArrayList<Trash> trashList;
@@ -14,8 +24,15 @@ int activeTrash = 0;
 int moveDirX = 0;
 int moveDirY = 0;
 
+boolean startScreen = true;
+
 void setup() {
   size(1000, 800);
+  minim = new Minim(this);
+  bgMusic = minim.loadFile("background.mp3", 2048); // make sure the file is in your /data folder
+  bgMusic.loop();         // loop the music
+  bgMusic.setGain(-10);   // lower volume (0 = full, -80 = mute)
+
   backgroundScene = new BG();
   dcr = new Decoration();
   player = new Whale(width/2, height/2);
@@ -40,6 +57,11 @@ void spawnTrash() {
 }
 
 void keyPressed() {
+  if (startScreen) {
+    startScreen = false;
+    return;
+  }
+
   if ((key == 'a' || key == 'A') && player.x > 0) {
     moveDirX = -1;
   } else if ((key == 'd' || key == 'D') && player.x < width) {
@@ -62,6 +84,18 @@ void keyReleased() {
 
 
 void draw() {
+
+  if (startScreen) {
+    background(0, 100, 200); // ocean blue
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textSize(50);
+    text("Whale Clean It Up!", width/2, height/2 - 50);
+    textSize(25);
+    text("Press any key to start", width/2, height/2 + 30);
+    return;
+  }
+
   backgroundScene.display();
 
   dcr.starfish(600, -50, #E6E6FA);
@@ -73,6 +107,8 @@ void draw() {
   dcr.starfish(450, -60, #FFDAB9);
   dcr.starfish(430, 35, #FF9966);
 
+
+  // Player movement and boundary check
   float playerX = player.getPosX();
   float playerY = player.getPosY();
   if ((playerX > 0 && playerX < width) || (playerX <= 0 && moveDirX == 1) || (playerX >= width && moveDirX == -1)) {
@@ -92,6 +128,8 @@ void draw() {
     lastSpawnTime = millis();
   }
 
+  // keep track of trash and 
+
   for (Trash t : trashList) {
     t.update();
     t.display();
@@ -100,7 +138,7 @@ void draw() {
       t.active = false;
       trashCount++;
       activeTrash--;
-      
+
       if (trashCount % 3 == 0 && spawnInterval > 750) {
         spawnInterval -= 750;
       }
