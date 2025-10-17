@@ -1,6 +1,8 @@
 # 🐳 Whale Clean It Up!
  **The best** sports day game **ever!**
 
+![alt text](cover.png "Cover page")
+
 
 ## All copyright free assets used:
 
