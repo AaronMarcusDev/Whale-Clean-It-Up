@@ -89,4 +89,7 @@ void draw() {
       trashCount += 1;
     }
   }
+  fill(0);
+        textSize(25);
+      text("trash counter:", 760, 40);
 }
