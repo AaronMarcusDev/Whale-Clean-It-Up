@@ -22,6 +22,7 @@ class Whale {
   void display() {
     // MAIN BODY
     pushMatrix();
+    stroke(0);
     translate(x, y);
     beginShape();
     fill(#519FCE);
@@ -57,17 +58,37 @@ class Whale {
     vertex(f*10, 20);
     endShape();
 
+    //BAG
+    fill(#DEC59D);
+    beginShape();
+    vertex(f*-20, 30);
+    vertex(f*-5, 40);
+    vertex(0, 55);
+    vertex(f*-5, 65);
+    vertex(f*-20, 70);
+    vertex(f*-35, 65);
+    vertex(f*-40, 55);
+    vertex(f*-35, 40);
+    endShape();
+    circle(f*-20,30,10);
+
+
     fill(#000000);
+    // EYE
     circle(f*40, 0, 6);
-    rect(f*30, -29, 20, 5);
-    rect(f*34, -39, 12, 10);
+    // TOP HAT
+    pushMatrix();
+    translate(f*30,-29);
+    rotate(f*PI/24);
+    rect(0, 0, f*20, 5);
+    rect(f*4, -10, f*12, 10);
+    popMatrix();
 
     // FLIPPER
     translate(f*-90, 32/4);
     rotate(0.5*sin(5*flipperAngle));
     fill(#519FCE);
     circle(0, 0, 38);
-    stroke(#000000);
     beginShape();
     vertex(0, -19);
     vertex(f*-40, -15);
@@ -95,4 +116,3 @@ class Whale {
     f = input; //changes face direction
   }
 }
-
