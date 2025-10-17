@@ -33,17 +33,26 @@ void spawnTrash() {
 
 void keyPressed() {
   if (key == 'w') {
-    player.y -= 10;
+    if (player.y - 10 >= 180) { // prevent going above water
+      player.y -= 10;
+    }
   } else if (key == 's') {
-    player.y += 10;
+    if (player.y + 10 <= height - 80) {
+      player.y += 10;
+    }
   } else if (key == 'a') {
-    player.x -= 10;
-    player.setF(-1);
+    if (player.x - 10 >= 0) {
+      player.x -= 10;
+      player.setF(-1);
+    }
   } else if (key == 'd') {
-    player.x += 10;
-    player.setF(1);
+    if (player.x + 10 <= width) {
+      player.x += 10;
+      player.setF(1);
+    }
   }
 }
+
 
 void draw() {
   backgroundScene.display();
